@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deepfake Detector</title>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="card hero-card">
+            <h1>Deepfake Audio and Video Detection</h1>
+            <p class="subtitle">
+                Upload an audio or video file to analyze whether it may be manipulated.
+                Supported formats: MP4, AVI, MOV, MKV, WEBM, WAV, MP3, M4A, FLAC, AAC.
+            </p>
+
+            <form action="/upload" method="post" enctype="multipart/form-data" class="upload-form">
+                <label for="file">Select audio or video file</label>
+                <input type="file" id="file" name="file"
+                       accept=".mp4,.avi,.mov,.mkv,.webm,.wav,.mp3,.m4a,.flac,.aac"
+                       required />
+                <div class="file-info" id="fileInfo">No file chosen</div>
+                <button type="submit" id="submitBtn">
+                    <span id="btnText">Upload and Analyze</span>
+                    <span id="btnSpinner" style="display:none;">Analyzing…</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const input = document.getElementById('file');
+        const info  = document.getElementById('fileInfo');
+        const btn   = document.getElementById('submitBtn');
+        const txt   = document.getElementById('btnText');
+        const spin  = document.getElementById('btnSpinner');
+
+        input.addEventListener('change', () => {
+            info.textContent = input.files[0]
+                ? input.files[0].name + ' (' + (input.files[0].size / 1024 / 1024).toFixed(2) + ' MB)'
+                : 'No file chosen';
+        });
+
+        document.querySelector('.upload-form').addEventListener('submit', () => {
+            btn.disabled = true;
+            txt.style.display  = 'none';
+            spin.style.display = 'inline';
+        });
+    </script>
+</body>
+</html>
